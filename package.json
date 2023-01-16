@@ -1,0 +1,26 @@
+{
+  "name": "halat-bank-app",
+  "version": "1.0.0",
+  "description": "Halat is a mobile banking app developed by Providence Bank that requires a Back-End API to function.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaygrammer/Halat-Bank-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaygrammer/Halat-Bank-App/issues"
+  },
+  "homepage": "https://github.com/kaygrammer/Halat-Bank-App#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.3",
+    "nodemon": "^2.0.20"
+  }
+}
