@@ -32,9 +32,10 @@ const verifyTokenAndAdmin = (req, res, next)=>{
         if(req.user.isAdmin){
         next();
         }else{
-            res.status(403).json("you are not allowed to do that")
+            res.status(403).json("you are not allowed to do this, please contact the admin")
         }
     })
 }
+
 
 module.exports = {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin};

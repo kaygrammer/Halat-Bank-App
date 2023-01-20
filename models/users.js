@@ -30,10 +30,9 @@ const userSchema = new mongoose.Schema(
             type:String,
             required:[true]
         },
-        userType: {
-            type: String,
-            enum : ['user','admin'],
-            default: 'user'
+        isAdmin: {
+            type:Boolean,
+            default: false
         },
         isBlocked:{
             type:Boolean,
@@ -51,7 +50,8 @@ userSchema.pre('save', async function () {
 
 userSchema.methods.createJWT = function () {
 return jwt.sign(
-    { userId: this._id },
+    { userId: this._id,
+        isAdmin: this.isAdmin},
     process.env.JWT_SECRET,
     {
     expiresIn: process.env.JWT_LIFETIME,
