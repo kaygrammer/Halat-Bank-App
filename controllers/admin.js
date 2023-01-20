@@ -37,13 +37,11 @@ const userCount = async (req, res)=>{
   try{
   const user = await Users.find()
   userCounts = user.length
-  console.log(userCounts);
-  res.status(200).json({userCounts})
+  res.status(200).json({msg:`there are ${userCounts} users on the platform`})
 }catch(err){
     res.status(500).json(err)
 }
 }
-
 
 
 module.exports = {
