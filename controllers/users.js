@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken')
 const createUser = async (req, res) => {
     const existingUser = await Users.findOne({ email: req.body.email});
     if (existingUser) {
-        return res.status(401).json("email already exists");
+        return res.status(401).json({status:`failed`, msg:"email already exists"});
     }
     if (req.body.password.length <= 7) {
-        return res.status(401).json("password must be greater than 7 digits");
+        return res.status(401).json({status:`failed`, msg:"password must be greater than 7 digits"});
     }
     else{
     const user = new Users({
@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
     })
     try{
         const newuser = await user.save()
-        res.status(200).json({ msg: "account created successfully", newuser})
+        res.status(200).json({status:`success`, msg: "account created successfully", newuser})
     }catch(err){
         res.status(500).json(err);
     }}
@@ -34,23 +34,23 @@ const login = async (req, res) => {
     const { email, password } = req.body
   
     if (!email || !password) {
-        return res.status(401).json("invalid email or password");
+        return res.status(401).json({status:"failed", msg:"invalid email or password"});
     }
     if (req.body.password.length <= 7) {
         return res.status(401).json("password must be greater than 7 digits");
     }
     const user = await Users.findOne({ email })
     if (!user) {
-        return res.status(401).json("user does not exist");
+        return res.status(401).json({status:`failed`,msg:"user does not exist"});
     }
     // compare password
     const isPasswordCorrect = await user.comparePassword(password)
     if (!isPasswordCorrect) {
-        return res.status(401).json("incorrect password");
+        return res.status(401).json({status:`failed`, msg:"incorrect password"});
     }
     
     const token = user.createJWT()
-    res.status(200).json({ user: { email }, token })
+    res.status(200).json({stats:`success`, msg:`user with ${email} logged in successfully`,  user: { email }, token })
   }
   
 
@@ -58,9 +58,9 @@ const login = async (req, res) => {
   const getAccountNumber = async (req, res) =>{
     try{
     const account = await Users.findById(req.params.id, 'phoneNumber')
-    return res.status(200).json({msg:`your account number is ${account.phoneNumber}`})
+    return res.status(200).json({status: `success`, msg:`your account number is ${account.phoneNumber}`})
 }catch(err){
-    return res.status(401).json("account number not found")
+    return res.status(401).json({status:`success`, msg:"account number not found"})
 }
   }
 
